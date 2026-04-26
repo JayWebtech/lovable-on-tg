@@ -1,0 +1,42 @@
+{
+  "name": "sitebot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SiteBot — Telegram AI website builder with Locus Checkout and Locus Build",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.35.0",
+    "@grammyjs/storage-redis": "^2.4.0",
+    "axios": "^1.7.0",
+    "bullmq": "^5.0.0",
+    "dotenv": "^16.4.0",
+    "drizzle-orm": "^0.38.0",
+    "express": "^4.21.0",
+    "grammy": "^1.30.0",
+    "ioredis": "^5.4.0",
+    "pg": "^8.13.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/pg": "^8.11.0",
+    "drizzle-kit": "^0.30.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "scripts": {
+    "dev:bot": "tsx watch src/bot/index.ts",
+    "dev:worker": "tsx watch src/queue/index.ts",
+    "build": "tsc",
+    "start:bot": "node dist/bot/index.js",
+    "start:worker": "node dist/queue/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push"
+  }
+}
