@@ -30,9 +30,11 @@
     "typescript": "^5.7.0"
   },
   "scripts": {
+    "dev": "tsx watch src/main.ts",
     "dev:bot": "tsx watch src/bot/index.ts",
     "dev:worker": "tsx watch src/queue/index.ts",
     "build": "tsc",
+    "start": "node dist/main.js",
     "start:bot": "node dist/bot/index.js",
     "start:worker": "node dist/queue/index.js",
     "db:generate": "drizzle-kit generate",
