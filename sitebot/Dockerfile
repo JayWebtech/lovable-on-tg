@@ -14,4 +14,4 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist/
 ENV NODE_ENV=production
 EXPOSE 8080
-CMD ["node", "dist/bot/index.js"]
+CMD ["node", "dist/main.js"]
