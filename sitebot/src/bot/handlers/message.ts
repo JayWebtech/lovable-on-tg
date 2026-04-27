@@ -119,7 +119,12 @@ export async function handleTextMessage(ctx: SiteBotContext): Promise<void> {
         { parse_mode: "HTML", reply_markup: payKb }
       );
     } catch (e) {
-      logger.error("Failed to generate credit session link", { err: String(e) });
+      logger.error("Failed to generate credit session link", { 
+        err: String(e),
+        telegramId: String(tid),
+        chatId: String(chatId),
+        price: PRICES.STANDARD_BUILD
+      });
       await ctx.reply(`You don't have any Build Credits, and we couldn't generate a purchase link right now. Try again later.`);
     }
     return;

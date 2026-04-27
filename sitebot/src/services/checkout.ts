@@ -95,7 +95,12 @@ export async function createSession(
   };
   const res = await c.post("/checkout/sessions", body);
   if (res.status >= 400) {
-    logger.error("createSession failed", { status: res.status, data: res.data });
+    logger.error("createSession failed", { 
+      status: res.status, 
+      data: res.data,
+      baseURL: checkoutBase(),
+      payload: body 
+    });
     throw new Error(`Checkout createSession HTTP ${res.status}`);
   }
   logger.info("createSession raw HTTP response:", { data: res.data });
@@ -129,7 +134,12 @@ export async function createDomainSession(
   };
   const res = await c.post("/checkout/sessions", body);
   if (res.status >= 400) {
-    logger.error("createDomainSession failed", { status: res.status, data: res.data });
+    logger.error("createDomainSession failed", { 
+      status: res.status, 
+      data: res.data,
+      baseURL: checkoutBase(),
+      payload: body 
+    });
     throw new Error(`Checkout createDomainSession HTTP ${res.status}`);
   }
   logger.info("createDomainSession raw HTTP response:", { data: res.data });
@@ -159,7 +169,12 @@ export async function createCreditSession(
   };
   const res = await c.post("/checkout/sessions", body);
   if (res.status >= 400) {
-    logger.error("createCreditSession failed", { status: res.status, data: res.data });
+    logger.error("createCreditSession failed", { 
+      status: res.status, 
+      data: res.data,
+      baseURL: checkoutBase(),
+      payload: body 
+    });
     throw new Error(`Checkout createCreditSession HTTP ${res.status}`);
   }
   logger.info("createCreditSession raw HTTP response:", { data: res.data });
