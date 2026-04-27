@@ -34,6 +34,10 @@ const timerWorker = new Worker("payment-timers", createPaymentTimerProcessor(bot
 buildWorker.on("failed", (j, e) => logger.error("build job failed", { id: j?.id, err: String(e) }));
 timerWorker.on("failed", (j, e) => logger.error("timer job failed", { id: j?.id, err: String(e) }));
 
+buildWorker.on("error", (e) => logger.error("Build Worker connection error", { err: String(e) }));
+timerWorker.on("error", (e) => logger.error("Timer Worker connection error", { err: String(e) }));
+
+
 logger.info("SiteBot workers listening");
 
 async function shutdown(): Promise<void> {

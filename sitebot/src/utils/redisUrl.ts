@@ -12,6 +12,7 @@ export function parseRedisUrl(urlStr: string): RedisOptions {
     db: Number.isFinite(db) ? db : 0,
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
+    tls: u.protocol === "rediss:" ? {} : undefined,
     retryStrategy(times: number) {
       return Math.min(times * 200, 5000);
     },

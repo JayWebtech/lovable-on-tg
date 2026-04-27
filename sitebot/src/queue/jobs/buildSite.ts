@@ -108,7 +108,9 @@ async function pushBundleToLocus(projectId: string, dir: string): Promise<string
 export function createBuildProcessor(bot: Bot<Context>) {
   return async (job: Job<BuildJobData>): Promise<void> => {
     const { buildId, telegramId, chatId, messageId, prompt } = job.data;
+    logger.info("Worker: Processing build job", { buildId, telegramId });
     const expiryDays = Number.parseInt(process.env.SITE_EXPIRY_DAYS ?? "7", 10);
+
 
     const refundCredit = async () => {
       try {
