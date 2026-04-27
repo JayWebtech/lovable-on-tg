@@ -1,13 +1,12 @@
 import { eq } from "drizzle-orm";
 import { InlineKeyboard } from "grammy";
 import { db } from "../../db/index.js";
-import { builds, payments, users } from "../../db/schema.js";
+import { builds, users } from "../../db/schema.js";
 import { createCreditSession, PRICES } from "../../services/checkout.js";
 import { searchDomains } from "../../services/locus.js";
-import { paymentTimerQueue, siteBuildQueue } from "../../queue/connection.js";
+import { siteBuildQueue } from "../../queue/connection.js";
 import { getRedis } from "../../redisClient.js";
 import { logger } from "../../utils/logger.js";
-import { consumeBuildRateToken, BuildRateLimitError } from "../middleware/rateLimit.js";
 import { handleDomainContactWizardMessage } from "../domainContactWizard.js";
 import type { SiteBotContext } from "../context.js";
 
@@ -22,13 +21,6 @@ async function upsertUser(ctx: SiteBotContext): Promise<void> {
       firstName: ctx.from.first_name,
     });
   }
-}
-
-function paymentDelays(): { remindMs: number; expireMs: number } {
-  const mins = Number.parseInt(process.env.PAYMENT_TIMEOUT_MINUTES ?? "30", 10);
-  const expireMs = (Number.isFinite(mins) ? mins : 30) * 60 * 1000;
-  const remindMs = Math.min(expireMs / 2, 15 * 60 * 1000);
-  return { remindMs, expireMs };
 }
 
 async function handleDomainNameInput(ctx: SiteBotContext, buildId: string, text: string): Promise<void> {
@@ -97,7 +89,7 @@ export async function handleTextMessage(ctx: SiteBotContext): Promise<void> {
     return;
   }
 
-  await ctx.replyWithChatAction("typing").catch(() => {});
+  await ctx.replyWithChatAction("typing").catch(() => { });
 
   /*
   try {
@@ -121,7 +113,7 @@ export async function handleTextMessage(ctx: SiteBotContext): Promise<void> {
     try {
       const { checkoutUrl } = await createCreditSession(tid, chatId, PRICES.STANDARD_BUILD);
       const payKb = new InlineKeyboard().url(`🎟️ Buy 1 Credit ($${PRICES.STANDARD_BUILD.toFixed(2)} USDC)`, checkoutUrl);
-      
+
       await ctx.reply(
         `🌐 <b>SiteBot</b>\n\nYour Build Credit balance is <b>0</b>.\n\nPlease purchase a credit to build this site, then send your description again.`,
         { parse_mode: "HTML", reply_markup: payKb }
