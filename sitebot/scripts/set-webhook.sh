@@ -18,4 +18,4 @@ else
 fi
 
 echo
-curl -sS "https://api.telegram.org/bot8604948862:AAGUM6Rl9PghTKOYtGqIARri6OrJEes9Gnk/getWebhookInfo" | jq .
+curl -sS "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getWebhookInfo" | jq .
